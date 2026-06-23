@@ -10,8 +10,8 @@ import { environment } from '../../../environments/environment';
 })
 export class AuthService {
   private readonly API_URL = environment.apiUrl;
-  private readonly TOKEN_KEY = 'mtdpce_token';
-  private readonly USER_KEY = 'mtdpce_user';
+  private readonly TOKEN_KEY = 'Memc_token';
+  private readonly USER_KEY = 'Memc_user';
 
   private currentUserSignal = signal<JwtResponse | null>(this.getStoredUser());
 

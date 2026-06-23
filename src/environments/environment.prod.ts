@@ -6,7 +6,7 @@ export const environment = {
   // Intervalle de rafraîchissement des actualités (en millisecondes)
   refreshInterval: 30000,
   // Nom de l'application
-  appName: 'MTDPCE - Ministère de la Transition Digitale',
+  appName: 'Memc - Ministère de la Transition Digitale',
   // Version de l'application
   version: '1.0.0'
 };

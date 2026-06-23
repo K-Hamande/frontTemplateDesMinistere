@@ -22,8 +22,8 @@ var AuthService = class _AuthService {
   http;
   router;
   API_URL = environment.apiUrl;
-  TOKEN_KEY = "mtdpce_token";
-  USER_KEY = "mtdpce_user";
+  TOKEN_KEY = "Memc_token";
+  USER_KEY = "Memc_user";
   currentUserSignal = signal(this.getStoredUser(), ...ngDevMode ? [{ debugName: "currentUserSignal" }] : []);
   currentUser = computed(() => this.currentUserSignal(), ...ngDevMode ? [{ debugName: "currentUser" }] : []);
   isAuthenticated = computed(() => !!this.currentUserSignal(), ...ngDevMode ? [{ debugName: "isAuthenticated" }] : []);

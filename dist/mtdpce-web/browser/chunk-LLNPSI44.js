@@ -225,7 +225,7 @@ var FAQComponent = class _FAQComponent {
           {
             id: 4,
             question: "Comment contacter le service technique ?",
-            answer: "Vous pouvez contacter notre service technique par email \xE0 support@mtdpce.gov.bf ou par t\xE9l\xE9phone au +226 25 30 XX XX du lundi au vendredi de 8h \xE0 17h.",
+            answer: "Vous pouvez contacter notre service technique par email \xE0 support@Memc.gov.bf ou par t\xE9l\xE9phone au +226 25 30 XX XX du lundi au vendredi de 8h \xE0 17h.",
             category: "Technique",
             displayOrder: 4,
             viewCount: 156,

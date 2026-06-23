@@ -25,14 +25,14 @@ import { AuthService } from '../../core/services/auth.service';
           <div class="w-16 h-16 flex-shrink-0">
             <img
               src="assets/images/armoirie.png"
-              alt="Logo MTDPCE"
+              alt="Logo MEMC"
               class="w-full h-full object-contain"
             />
           </div>
 
           <!-- Sigle du Ministère + Burkina Faso -->
           <div class="flex flex-col leading-tight justify-center">
-            <span class="text-xl font-bold text-slate-900">MTDPCE</span>
+            <span class="text-xl font-bold text-slate-900">MEMC</span>
             <span class="text-sm font-medium text-danger-500">Burkina Faso</span>
           </div>
         </a>

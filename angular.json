@@ -7,7 +7,7 @@
   },
   "newProjectRoot": "projects",
   "projects": {
-    "mtdpce-web": {
+    "memc-web": {
       "projectType": "application",
       "schematics": {
         "@schematics/angular:component": {
@@ -92,10 +92,10 @@
           },
           "configurations": {
             "production": {
-              "buildTarget": "mtdpce-web:build:production"
+              "buildTarget": "memc-web:build:production"
             },
             "development": {
-              "buildTarget": "mtdpce-web:build:development"
+              "buildTarget": "memc-web:build:development"
             }
           },
           "defaultConfiguration": "development"

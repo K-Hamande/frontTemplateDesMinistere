@@ -20,7 +20,7 @@ import { AuthService } from '../../core/services/auth.service';
               </svg>
             </div>
             <div class="hidden md:block">
-              <span class="text-sm font-semibold text-slate-800">MTDPCE</span>
+              <span class="text-sm font-semibold text-slate-800">Memc</span>
               <span class="text-sm text-danger-500 font-bold ml-1">Burkina Faso</span> <span class="text-sm font-medium text-danger-500">
     Burkina Faso
   </span>

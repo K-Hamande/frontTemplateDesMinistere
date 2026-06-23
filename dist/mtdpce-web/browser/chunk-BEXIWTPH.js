@@ -238,8 +238,8 @@ var EventsComponent = class _EventsComponent {
             onlineUrl: "",
             isFree: true,
             price: 0,
-            organizerName: "MTDPCE",
-            organizerEmail: "evenements@mtdpce.gov.bf",
+            organizerName: "Memc",
+            organizerEmail: "evenements@Memc.gov.bf",
             organizerPhone: "+226 25 30 XX XX",
             createdAt: (/* @__PURE__ */ new Date()).toISOString(),
             updatedAt: (/* @__PURE__ */ new Date()).toISOString()

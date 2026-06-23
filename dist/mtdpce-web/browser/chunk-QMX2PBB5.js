@@ -150,7 +150,7 @@ var LoginComponent = class _LoginComponent {
       \u0275\u0275elementEnd()();
       \u0275\u0275namespaceHTML();
       \u0275\u0275elementStart(12, "div")(13, "div", 11);
-      \u0275\u0275text(14, "MTDPCE");
+      \u0275\u0275text(14, "Memc");
       \u0275\u0275elementEnd();
       \u0275\u0275elementStart(15, "div", 12);
       \u0275\u0275text(16, "Burkina Faso");
@@ -185,7 +185,7 @@ var LoginComponent = class _LoginComponent {
       \u0275\u0275elementEnd()();
       \u0275\u0275namespaceHTML();
       \u0275\u0275elementStart(43, "div", 29)(44, "div", 30);
-      \u0275\u0275text(45, "MTDPCE");
+      \u0275\u0275text(45, "Memc");
       \u0275\u0275elementEnd();
       \u0275\u0275elementStart(46, "div", 31);
       \u0275\u0275text(47, "Burkina Faso");
@@ -269,7 +269,7 @@ var LoginComponent = class _LoginComponent {
     }
     if (rf & 2) {
       \u0275\u0275advance(35);
-      \u0275\u0275textInterpolate1(" \xA9 ", ctx.currentYear, " MTDPCE - Burkina Faso ");
+      \u0275\u0275textInterpolate1(" \xA9 ", ctx.currentYear, " Memc - Burkina Faso ");
       \u0275\u0275advance(19);
       \u0275\u0275conditional(ctx.error() ? 54 : -1);
       \u0275\u0275advance(9);
@@ -314,7 +314,7 @@ var LoginComponent = class _LoginComponent {
                 </svg>
               </div>
               <div>
-                <div class="font-heading font-bold text-xl text-slate-900">MTDPCE</div>
+                <div class="font-heading font-bold text-xl text-slate-900">Memc</div>
                 <div class="text-sm text-slate-500">Burkina Faso</div>
               </div>
             </a>
@@ -340,7 +340,7 @@ var LoginComponent = class _LoginComponent {
           </div>
           
           <div class="text-sm text-slate-500">
-            \xA9 {{ currentYear }} MTDPCE - Burkina Faso
+            \xA9 {{ currentYear }} Memc - Burkina Faso
           </div>
         </div>
       </div>
@@ -356,7 +356,7 @@ var LoginComponent = class _LoginComponent {
                 </svg>
               </div>
               <div class="text-left">
-                <div class="font-heading font-bold text-lg text-slate-900">MTDPCE</div>
+                <div class="font-heading font-bold text-lg text-slate-900">Memc</div>
                 <div class="text-xs text-slate-500">Burkina Faso</div>
               </div>
             </a>

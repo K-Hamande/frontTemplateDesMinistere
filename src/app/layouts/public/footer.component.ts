@@ -20,7 +20,7 @@ import { RouterLink } from '@angular/router';
                 </svg>
               </div>
               <div>
-                <span class="font-semibold text-slate-800">MTDPCE</span>
+                <span class="font-semibold text-slate-800">Memc</span>
                 <span class="text-danger-500 font-bold ml-1">Burkina Faso</span>
               </div>
             </div>
@@ -100,7 +100,7 @@ import { RouterLink } from '@angular/router';
                 <svg class="w-5 h-5 text-primary-500 flex-shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/>
                 </svg>
-                <span class="text-sm text-slate-600">contact&#64;mtdpce.gov.bf</span>
+                <span class="text-sm text-slate-600">contact&#64;Memc.gov.bf</span>
               </li>
             </ul>
             
@@ -128,7 +128,7 @@ import { RouterLink } from '@angular/router';
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4">
           <div class="flex flex-col md:flex-row items-center justify-between gap-4">
             <p class="text-sm text-slate-500">
-              © {{ currentYear }} MTDPCE Burkina Faso. Tous droits réservés.
+              © {{ currentYear }} Memc Burkina Faso. Tous droits réservés.
             </p>
             <div class="flex items-center gap-4 text-sm text-slate-500">
               <a href="#" class="hover:text-primary-600 transition-colors">Mentions légales</a>

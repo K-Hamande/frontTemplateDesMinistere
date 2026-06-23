@@ -243,7 +243,7 @@ var HeaderComponent = class _HeaderComponent {
       \u0275\u0275elementEnd()();
       \u0275\u0275namespaceHTML();
       \u0275\u0275elementStart(7, "div", 7)(8, "span", 8);
-      \u0275\u0275text(9, "MTDPCE");
+      \u0275\u0275text(9, "Memc");
       \u0275\u0275elementEnd();
       \u0275\u0275elementStart(10, "span", 9);
       \u0275\u0275text(11, "Burkina Faso");
@@ -354,7 +354,7 @@ var HeaderComponent = class _HeaderComponent {
               </svg>
             </div>
             <div class="hidden md:block">
-              <span class="text-sm font-semibold text-slate-800">MTDPCE</span>
+              <span class="text-sm font-semibold text-slate-800">Memc</span>
               <span class="text-sm text-danger-500 font-bold ml-1">Burkina Faso</span>
             </div>
           </a>
@@ -547,7 +547,7 @@ var FooterComponent = class _FooterComponent {
       \u0275\u0275elementEnd()();
       \u0275\u0275namespaceHTML();
       \u0275\u0275elementStart(8, "div")(9, "span", 7);
-      \u0275\u0275text(10, "MTDPCE");
+      \u0275\u0275text(10, "Memc");
       \u0275\u0275elementEnd();
       \u0275\u0275elementStart(11, "span", 8);
       \u0275\u0275text(12, "Burkina Faso");
@@ -625,7 +625,7 @@ var FooterComponent = class _FooterComponent {
       \u0275\u0275elementEnd();
       \u0275\u0275namespaceHTML();
       \u0275\u0275elementStart(77, "span", 29);
-      \u0275\u0275text(78, "contact@mtdpce.gov.bf");
+      \u0275\u0275text(78, "contact@Memc.gov.bf");
       \u0275\u0275elementEnd()()();
       \u0275\u0275elementStart(79, "div", 32)(80, "a", 33);
       \u0275\u0275namespaceSVG();
@@ -672,7 +672,7 @@ var FooterComponent = class _FooterComponent {
     }
     if (rf & 2) {
       \u0275\u0275advance(96);
-      \u0275\u0275textInterpolate1(" \xA9 ", ctx.currentYear, " MTDPCE Burkina Faso. Tous droits r\xE9serv\xE9s. ");
+      \u0275\u0275textInterpolate1(" \xA9 ", ctx.currentYear, " Memc Burkina Faso. Tous droits r\xE9serv\xE9s. ");
     }
   }, dependencies: [CommonModule, RouterLink], encapsulation: 2 });
 };
@@ -697,7 +697,7 @@ var FooterComponent = class _FooterComponent {
                 </svg>
               </div>
               <div>
-                <span class="font-semibold text-slate-800">MTDPCE</span>
+                <span class="font-semibold text-slate-800">Memc</span>
                 <span class="text-danger-500 font-bold ml-1">Burkina Faso</span>
               </div>
             </div>
@@ -777,7 +777,7 @@ var FooterComponent = class _FooterComponent {
                 <svg class="w-5 h-5 text-primary-500 flex-shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/>
                 </svg>
-                <span class="text-sm text-slate-600">contact&#64;mtdpce.gov.bf</span>
+                <span class="text-sm text-slate-600">contact&#64;Memc.gov.bf</span>
               </li>
             </ul>
             
@@ -805,7 +805,7 @@ var FooterComponent = class _FooterComponent {
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4">
           <div class="flex flex-col md:flex-row items-center justify-between gap-4">
             <p class="text-sm text-slate-500">
-              \xA9 {{ currentYear }} MTDPCE Burkina Faso. Tous droits r\xE9serv\xE9s.
+              \xA9 {{ currentYear }} Memc Burkina Faso. Tous droits r\xE9serv\xE9s.
             </p>
             <div class="flex items-center gap-4 text-sm text-slate-500">
               <a href="#" class="hover:text-primary-600 transition-colors">Mentions l\xE9gales</a>

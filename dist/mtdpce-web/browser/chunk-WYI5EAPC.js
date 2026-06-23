@@ -964,7 +964,7 @@ var HomeComponent = class _HomeComponent {
         </div>
       </div>
     </section>
-  `, styles: ["/* angular:styles/component:scss;f372ff439daa3e7704aac10b8bb2f110774c7b0754fc93b159880b15e88086f5;/home/ubuntu/mtdpce-burkina/frontend/mtdpce-web/src/app/features/home/home.component.ts */\n@keyframes fadeIn {\n  from {\n    opacity: 0;\n    transform: translateY(10px);\n  }\n  to {\n    opacity: 1;\n    transform: translateY(0);\n  }\n}\n.animate-fadeIn {\n  animation: fadeIn 0.5s ease-out forwards;\n}\n/*# sourceMappingURL=home.component.css.map */\n"] }]
+  `, styles: ["/* angular:styles/component:scss;f372ff439daa3e7704aac10b8bb2f110774c7b0754fc93b159880b15e88086f5;/home/ubuntu/Memc-burkina/frontend/Memc-web/src/app/features/home/home.component.ts */\n@keyframes fadeIn {\n  from {\n    opacity: 0;\n    transform: translateY(10px);\n  }\n  to {\n    opacity: 1;\n    transform: translateY(0);\n  }\n}\n.animate-fadeIn {\n  animation: fadeIn 0.5s ease-out forwards;\n}\n/*# sourceMappingURL=home.component.css.map */\n"] }]
   }], null, null);
 })();
 (() => {

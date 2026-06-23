@@ -187,7 +187,7 @@ var ContactComponent = class _ContactComponent {
       \u0275\u0275text(47, "Email");
       \u0275\u0275elementEnd();
       \u0275\u0275elementStart(48, "p", 22);
-      \u0275\u0275text(49, "contact@mtdpce.gov.bf");
+      \u0275\u0275text(49, "contact@Memc.gov.bf");
       \u0275\u0275elementEnd()()();
       \u0275\u0275elementStart(50, "li", 16)(51, "div", 17);
       \u0275\u0275namespaceSVG();
@@ -363,7 +363,7 @@ var ContactComponent = class _ContactComponent {
                   </div>
                   <div>
                     <p class="font-medium text-slate-900">Email</p>
-                    <p class="text-slate-500 text-sm mt-1">contact&#64;mtdpce.gov.bf</p>
+                    <p class="text-slate-500 text-sm mt-1">contact&#64;Memc.gov.bf</p>
                   </div>
                 </li>
                 <li class="flex items-start gap-4">

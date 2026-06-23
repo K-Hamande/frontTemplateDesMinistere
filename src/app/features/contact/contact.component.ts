@@ -68,7 +68,7 @@ import { ApiService } from '../../core/services/api.service';
                   </div>
                   <div>
                     <p class="font-medium text-slate-900">Email</p>
-                    <p class="text-slate-500 text-sm mt-1">contact&#64;mtdpce.gov.bf</p>
+                    <p class="text-slate-500 text-sm mt-1">contact&#64;Memc.gov.bf</p>
                   </div>
                 </li>
                 <li class="flex items-start gap-4">
