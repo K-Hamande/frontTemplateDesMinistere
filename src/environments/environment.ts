@@ -14,7 +14,7 @@ export const environment = {
 
   export const environment = {
     production: false,
-    apiUrl: 'http://72.61.162.94:8096/api/v1',
-    authUrl: 'http://72.61.162.94:8096/api/auth',
-    FileUrl: 'http://72.61.162.94:8096',
+    apiUrl: 'http://localhost:8096/api/v1',
+    authUrl: 'http://localhost:8096/api/auth',
+    FileUrl: 'http://localhost:8096',
   };
