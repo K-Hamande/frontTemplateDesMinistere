@@ -677,4 +677,106 @@ getAllEvents(page = 0, size = 10): Observable<Page<Events>> {
   deleteStructure(id: number): Observable<ApiResponse<void>> {
     return this.http.delete<ApiResponse<void>>(`${this.API_URL}/structures/${id}`);
   }
+
+  // mediathèque
+/* ===========================================================
+   PHOTOS
+=========================================================== */
+
+private readonly photoUrl = `${environment.apiUrl}/photos`;
+
+/**
+ * Liste des photos
+ */
+getAllPhotos(): Observable<any> {
+  return this.http.get<any>(this.photoUrl);
+}
+
+/**
+ * Détail d'une photo
+ */
+getPhotoById(id: number): Observable<any> {
+  return this.http.get<any>(`${this.photoUrl}/${id}`);
+}
+
+/**
+ * Ajouter une photo
+ */
+createPhoto(formData: FormData): Observable<any> {
+  return this.http.post<any>(
+    this.photoUrl,
+    formData
+  );
+}
+
+/**
+ * Modifier une photo
+ */
+updatePhoto(id: number, formData: FormData): Observable<any> {
+  return this.http.put<any>(
+    `${this.photoUrl}/${id}`,
+    formData
+  );
+}
+
+/**
+ * Supprimer une photo
+ */
+deletePhoto(id: number): Observable<any> {
+  return this.http.delete<any>(
+    `${this.photoUrl}/${id}`
+  );
+}
+
+
+/* ===========================================================
+   VIDEOS
+=========================================================== */
+
+private readonly videoUrl = `${environment.apiUrl}/videos`;
+
+/**
+ * Liste des vidéos
+ */
+getAllVideos(): Observable<any> {
+  return this.http.get<any>(this.videoUrl);
+}
+
+/**
+ * Détail d'une vidéo
+ */
+getVideoById(id: number): Observable<any> {
+  return this.http.get<any>(
+    `${this.videoUrl}/${id}`
+  );
+}
+
+/**
+ * Ajouter une vidéo
+ */
+createVideo(formData: FormData): Observable<any> {
+  return this.http.post<any>(
+    this.videoUrl,
+    formData
+  );
+}
+
+/**
+ * Modifier une vidéo
+ */
+updateVideo(id: number, formData: FormData): Observable<any> {
+  return this.http.put<any>(
+    `${this.videoUrl}/${id}`,
+    formData
+  );
+}
+
+/**
+ * Supprimer une vidéo
+ */
+deleteVideo(id: number): Observable<any> {
+  return this.http.delete<any>(
+    `${this.videoUrl}/${id}`
+  );
+}
 }

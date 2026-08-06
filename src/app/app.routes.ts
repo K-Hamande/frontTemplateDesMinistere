@@ -14,7 +14,8 @@ export const routes: Routes = [
       { path: 'projets/:id', loadComponent: () => import('./features/projects/detail-projets/detail-projets.component').then(m => m.DetailProjetsComponent) },
       { path: 'ressources/documents', loadComponent: () => import('./features/documents/documents/documents.component').then(m => m.DocumentsComponent) },
       // { path: 'DocumentsJuridique/', loadComponent: () => import('./features/DocumentsJuridique/Lois/Lois.component').then(m => m.DocumentsJuridiqueComponent) },
-      // { path: 'DocumentsJuridique/Textes', loadComponent: () => import('./features/DocumentsJuridique/Textes/Textes.component').then(m => m.DocumentsJuridiqueComponent) },
+
+      { path: 'mediatheque/mediatheque', loadComponent: () => import('./features/mediatheque/mediatheque/mediatheque.component').then(m => m.MediathequeComponent) },
       { path: 'contact', loadComponent: () => import('./features/contact/contact/contact.component').then(m => m.ContactComponent) },
       { path: 'ministere/ministre', loadComponent: () => import('./features/ministere/ministre/ministre.component').then(m => m.MinistreComponent) },
       { path: 'ministere/missions', loadComponent: () => import('./features/ministere/mission/mission.component').then(m => m.MissionComponent) },
@@ -54,6 +55,7 @@ export const routes: Routes = [
     canActivate: [adminGuard],
     children: [
       { path: '', redirectTo: 'dashboard', pathMatch: 'full' },
+      { path: 'mediatheque', loadComponent: () => import('./features/admin/photo/photo').then(m => m.PhotoComponent) },
       { path: 'dashboard', loadComponent: () => import('./features/admin/dashboard/dashbord/dashbord.component').then(m => m.DashbordComponent) },
       { path: 'articlest', loadComponent: () => import('./features/admin/articles/admin-articles.component').then(m => m.AdminArticlesComponent) },
       { path: 'project', loadComponent: () => import('./features/admin/projects/admin-projects.component').then(m => m.AdminProjectsComponent) },

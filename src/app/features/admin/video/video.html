@@ -1,0 +1,633 @@
+<!-- ========================================================= -->
+<!-- NOTIFICATION -->
+<!-- ========================================================= -->
+
+@if (notification().show) {
+
+  <div
+    class="fixed right-6 top-6 z-[100] flex min-w-[320px] max-w-md items-center gap-3 rounded-xl border px-5 py-4 shadow-xl"
+    [ngClass]="
+      notification().type === 'success'
+        ? 'border-green-200 bg-green-50 text-green-700'
+        : 'border-red-200 bg-red-50 text-red-700'
+    ">
+
+    <!-- Icône -->
+    @if (notification().type === 'success') {
+
+      <i class="bi bi-check-circle-fill text-xl"></i>
+
+    }
+
+    @else {
+
+      <i class="bi bi-exclamation-triangle-fill text-xl"></i>
+
+    }
+
+
+    <!-- Message -->
+    <span class="font-medium">
+
+      {{ notification().message }}
+
+    </span>
+
+
+    <!-- Fermer -->
+    <button
+      type="button"
+      class="ml-auto text-lg opacity-60 hover:opacity-100"
+      (click)="notification.set({
+        show: false,
+        type: 'success',
+        message: ''
+      })">
+
+      <i class="bi bi-x-lg"></i>
+
+    </button>
+
+  </div>
+
+}
+
+
+
+<div class="space-y-6">
+
+  <!-- En-tête -->
+  <div class="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
+
+    <div>
+
+      <h1 class="text-2xl font-bold text-neutral-900">
+        Vidéos
+      </h1>
+
+      <p class="text-neutral-500">
+        Gérez les vidéos de la médiathèque
+      </p>
+
+    </div>
+
+    <!-- Bouton nouvel ajout -->
+    <button
+      type="button"
+      (click)="openModal()"
+      class="btn-primary"
+      style="background-color: #00843B;">
+
+      <svg
+        class="mr-2 h-5 w-5"
+        fill="none"
+        stroke="currentColor"
+        viewBox="0 0 24 24">
+
+        <path
+          stroke-linecap="round"
+          stroke-linejoin="round"
+          stroke-width="2"
+          d="M12 6v6m0 0v6m6-6h-6m0 0H6">
+        </path>
+
+      </svg>
+
+      Nouvel Ajout
+
+    </button>
+
+  </div>
+
+
+  <!-- Tableau -->
+  <div class="card p-0">
+
+    <!-- Chargement -->
+    @if (loading()) {
+
+      <div class="p-8 text-center">
+
+        <div class="spinner mx-auto h-8 w-8"></div>
+
+      </div>
+
+    }
+
+    <!-- Aucune vidéo -->
+    @else if (videos().length === 0) {
+
+      <div class="p-8 text-center">
+
+        <p class="text-neutral-500">
+
+          Aucune vidéo pour le moment
+
+        </p>
+
+      </div>
+
+    }
+
+    <!-- Liste -->
+    @else {
+
+      <div class="table-container">
+
+        <table class="table">
+
+          <thead>
+
+            <tr>
+
+              <th>Aperçu</th>
+
+              <th>Type</th>
+
+              <th>Lien / Fichier</th>
+
+              <th class="text-right">
+                Actions
+              </th>
+
+            </tr>
+
+          </thead>
+
+          <tbody>
+
+            @for (
+              video of videos();
+              track video.id
+            ) {
+
+              <tr>
+
+                <!-- Aperçu -->
+                <td>
+
+                  @if (isYoutube(video)) {
+
+                    <div
+                      class="flex h-12 w-20 items-center justify-center rounded-lg bg-red-100">
+
+                      <i
+                        class="bi bi-youtube text-2xl text-red-600">
+                      </i>
+
+                    </div>
+
+                  }
+
+                  @else {
+
+                    <video
+                      controls
+                      class="h-12 w-20 rounded-lg border border-gray-200 object-cover">
+
+                      <source
+                        [src]="getVideoUrl(video.videoUrl)"
+                        type="video/mp4">
+
+                    </video>
+
+                  }
+
+                </td>
+
+
+                <!-- Type -->
+                <td>
+
+                  @if (isYoutube(video)) {
+
+                    <span
+                      class="rounded-full bg-red-100 px-3 py-1 text-sm font-medium text-red-700">
+
+                      YouTube
+
+                    </span>
+
+                  }
+
+                  @else {
+
+                    <span
+                      class="rounded-full bg-green-100 px-3 py-1 text-sm font-medium text-green-700">
+
+                      Vidéo locale
+
+                    </span>
+
+                  }
+
+                </td>
+
+
+                <!-- Lien -->
+                <td>
+
+                  <p
+                    class="max-w-md break-all font-medium text-neutral-900">
+
+                    @if (isYoutube(video)) {
+
+                      {{ video.youtubeUrl }}
+
+                    }
+
+                    @else {
+
+                      {{ video.videoUrl }}
+
+                    }
+
+                  </p>
+
+                </td>
+
+
+                <!-- Actions -->
+                <td class="text-right">
+
+                  <div class="flex justify-end gap-2">
+
+                    <!-- Modifier -->
+                    <button
+                      (click)="editVideo(video)"
+                      class="flex items-center justify-center p-2 border-2 border-green-500 rounded-full bg-white hover:bg-green-50"
+                      title="Modifier">
+
+                      ✏️
+
+                    </button>
+
+                    <button
+                      (click)="deleteVideo(video)"
+                      class="flex items-center justify-center p-2 border-2 border-red-500 rounded-full bg-white hover:bg-red-50"
+                      title="Supprimer">
+
+                      🗑️
+
+                    </button>
+
+                  </div>
+
+                </td>
+
+              </tr>
+
+            }
+
+          </tbody>
+
+        </table>
+
+      </div>
+
+    }
+
+  </div>
+
+</div>
+
+
+<!-- ========================================================= -->
+<!-- MODALE AJOUT / MODIFICATION -->
+<!-- ========================================================= -->
+
+@if (showModal()) {
+
+  <div
+    class="fixed inset-0 z-50 flex items-center justify-center bg-black/50 p-4">
+
+    <div
+      class="w-full max-w-2xl rounded-2xl bg-white shadow-xl">
+
+
+      <!-- En-tête -->
+      <div
+        class="border-b border-neutral-200 p-6">
+
+        <h2
+          class="text-xl font-semibold text-neutral-900">
+
+          {{
+            editingVideo()
+              ? 'Modifier une vidéo'
+              : 'Nouvelle vidéo'
+          }}
+
+        </h2>
+
+      </div>
+
+
+      <!-- Formulaire -->
+      <form
+        (ngSubmit)="saveVideo()"
+        class="space-y-5 p-6">
+
+
+        <!-- Type de vidéo -->
+        <div>
+
+          <label class="label">
+
+            Type de vidéo
+
+            <span class="text-danger-500">
+              *
+            </span>
+
+          </label>
+
+
+          <div class="mt-2 flex gap-6">
+
+
+            <!-- Vidéo locale -->
+            <label
+              class="flex cursor-pointer items-center gap-2">
+
+              <input
+                type="radio"
+                name="videoType"
+                value="local"
+                [checked]="mode() === 'local'"
+                (change)="changeMode('local')"
+                class="h-4 w-4">
+
+              <span>
+
+                Vidéo locale
+
+              </span>
+
+            </label>
+
+
+            <!-- YouTube -->
+            <label
+              class="flex cursor-pointer items-center gap-2">
+
+              <input
+                type="radio"
+                name="videoType"
+                value="youtube"
+                [checked]="mode() === 'youtube'"
+                (change)="changeMode('youtube')"
+                class="h-4 w-4">
+
+              <span>
+
+                YouTube
+
+              </span>
+
+            </label>
+
+          </div>
+
+        </div>
+
+
+        <!-- ============================= -->
+        <!-- VIDEO LOCALE -->
+        <!-- ============================= -->
+
+        @if (mode() === 'local') {
+
+          <div>
+
+            <label class="label">
+
+              Sélectionner une vidéo
+
+              <span class="text-danger-500">
+                *
+              </span>
+
+            </label>
+
+            <input
+              type="file"
+              accept="video/*"
+              (change)="onFileSelected($event)"
+              class="input">
+
+            <p
+              class="mt-1 text-sm text-neutral-500">
+
+              Formats acceptés : MP4, AVI, MOV, MKV...
+
+            </p>
+
+          </div>
+
+
+          <!-- Aperçu vidéo -->
+          @if (preview) {
+
+            <div class="text-center">
+
+              <video
+                controls
+                class="mx-auto max-h-80 max-w-full rounded-lg">
+
+                <source
+                  [src]="preview">
+
+              </video>
+
+            </div>
+
+          }
+
+        }
+
+
+        <!-- ============================= -->
+        <!-- YOUTUBE -->
+        <!-- ============================= -->
+
+        @if (mode() === 'youtube') {
+
+          <div>
+
+            <label class="label">
+
+              URL YouTube
+
+              <span class="text-danger-500">
+                *
+              </span>
+
+            </label>
+
+            <input
+              type="url"
+              name="youtubeUrl"
+              [(ngModel)]="form.youtubeUrl"
+              placeholder="https://www.youtube.com/watch?v=..."
+              class="input">
+
+          </div>
+
+
+          @if (form.youtubeUrl) {
+
+            <div
+              class="rounded-lg bg-red-50 p-3 text-sm text-red-700">
+
+              <i class="bi bi-youtube mr-2"></i>
+
+              Le lien YouTube sera enregistré.
+
+            </div>
+
+          }
+
+        }
+
+
+        <!-- Boutons -->
+        <div
+          class="flex justify-end gap-3 border-t border-neutral-200 pt-4">
+
+
+          <!-- Annuler -->
+          <button
+            type="button"
+            (click)="closeModal()"
+            class="rounded-lg border border-red-500 px-4 py-2 text-red-500 hover:bg-red-50">
+
+            Annuler
+
+          </button>
+
+
+          <!-- Enregistrer -->
+          <button
+            type="submit"
+            [disabled]="saving()"
+            class="btn-primary"
+            style="background-color: #00843B;">
+
+            @if (saving()) {
+
+              <div
+                class="spinner mr-2 h-4 w-4">
+              </div>
+
+            }
+
+            {{
+              editingVideo()
+                ? 'Mettre à jour'
+                : 'Créer'
+            }}
+
+          </button>
+
+        </div>
+
+      </form>
+
+    </div>
+
+  </div>
+
+}
+
+
+<!-- ========================================================= -->
+<!-- MODALE DE CONFIRMATION DE SUPPRESSION -->
+<!-- ========================================================= -->
+
+@if (confirmModal().show) {
+
+  <div
+    class="fixed inset-0 z-[60] flex items-center justify-center bg-black/50 p-4">
+
+
+    <div
+      class="w-full max-w-md overflow-hidden rounded-2xl bg-white shadow-2xl">
+
+
+      <!-- En-tête -->
+      <div
+        class="flex items-center gap-3 border-b border-neutral-200 px-6 py-4">
+
+
+        <div
+          class="flex h-10 w-10 items-center justify-center rounded-full bg-red-100">
+
+          <i
+            class="bi bi-exclamation-triangle-fill text-red-600">
+          </i>
+
+        </div>
+
+
+        <h3
+          class="text-lg font-semibold text-neutral-900">
+
+          Confirmation de suppression
+
+        </h3>
+
+      </div>
+
+
+      <!-- Message -->
+      <div
+        class="px-6 py-5">
+
+        <p
+          class="text-neutral-600">
+
+          {{ confirmModal().message }}
+
+        </p>
+
+      </div>
+
+
+      <!-- Actions -->
+      <div
+        class="flex justify-end gap-3 border-t border-neutral-200 px-6 py-4">
+
+
+        <!-- Annuler -->
+        <button
+          type="button"
+          (click)="closeConfirmModal()"
+          class="rounded-lg border border-neutral-300 px-4 py-2 text-neutral-700 hover:bg-neutral-100">
+
+          Annuler
+
+        </button>
+
+
+        <!-- Supprimer -->
+        <button
+          type="button"
+          (click)="confirmModal().onConfirm()"
+          class="rounded-lg bg-red-600 px-4 py-2 text-white hover:bg-red-700">
+
+          <i
+            class="bi bi-trash me-2">
+          </i>
+
+          Supprimer
+
+        </button>
+
+      </div>
+
+    </div>
+
+  </div>
+
+}

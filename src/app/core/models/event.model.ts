@@ -200,3 +200,13 @@ export interface Etats {
   valeur: string;
   
 }
+export interface Photo {
+  id?: number;
+  imageUrl: string;
+}
+
+export interface Video {
+  id?: number;
+  videoUrl?: string;
+  youtubeUrl?: string;
+}

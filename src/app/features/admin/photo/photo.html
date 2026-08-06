@@ -1,0 +1,394 @@
+<!-- ========================================================= -->
+<!-- NOTIFICATION -->
+<!-- ========================================================= -->
+
+@if (notification().show) {
+
+  <div
+    class="fixed right-6 top-6 z-[100] flex min-w-[320px] max-w-md items-center gap-3 rounded-xl border px-5 py-4 shadow-xl"
+    [ngClass]="
+      notification().type === 'success'
+        ? 'border-green-200 bg-green-50 text-green-700'
+        : 'border-red-200 bg-red-50 text-red-700'
+    ">
+
+    <!-- Icône -->
+    @if (notification().type === 'success') {
+
+      <i class="bi bi-check-circle-fill text-xl"></i>
+
+    }
+
+    @else {
+
+      <i class="bi bi-exclamation-triangle-fill text-xl"></i>
+
+    }
+
+
+    <!-- Message -->
+    <span class="font-medium">
+
+      {{ notification().message }}
+
+    </span>
+
+
+    <!-- Fermer -->
+    <button
+      type="button"
+      class="ml-auto text-lg opacity-60 hover:opacity-100"
+      (click)="notification.set({
+        show: false,
+        type: 'success',
+        message: ''
+      })">
+
+      <i class="bi bi-x-lg"></i>
+
+    </button>
+
+  </div>
+
+}
+
+
+<div class="space-y-6">
+
+  <!-- En-tête -->
+  <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
+
+    <div>
+
+      <h1 class="text-2xl font-bold text-neutral-900">
+        Photos
+      </h1>
+
+      <p class="text-neutral-500">
+        Gérez les photos de la médiathèque
+      </p>
+
+    </div>
+
+    <button
+      (click)="openModal()"
+      class="btn-primary"
+      style="background-color: #00843B;">
+
+      <svg
+        class="w-5 h-5 mr-2"
+        fill="none"
+        stroke="currentColor"
+        viewBox="0 0 24 24">
+
+        <path
+          stroke-linecap="round"
+          stroke-linejoin="round"
+          stroke-width="2"
+          d="M12 6v6m0 0v6m6-6h-6m0 0H6">
+        </path>
+
+      </svg>
+
+      Nouvel Ajout
+
+    </button>
+
+  </div>
+
+
+  <!-- Tableau -->
+  <div class="card p-0">
+
+    @if (loading()) {
+
+      <div class="p-8 text-center">
+
+        <div class="spinner w-8 h-8 mx-auto"></div>
+
+      </div>
+
+    }
+
+    @else if (photos().length === 0) {
+
+      <div class="p-8 text-center">
+
+        <p class="text-neutral-500">
+
+          Aucune photo pour le moment
+
+        </p>
+
+      </div>
+
+    }
+
+    @else {
+
+      <div class="table-container">
+
+        <table class="table">
+
+          <thead>
+
+            <tr>
+
+              <th>Photo</th>
+
+              <th>Nom du fichier</th>
+
+              <th class="text-right">
+                Actions
+              </th>
+
+            </tr>
+
+          </thead>
+
+          <tbody>
+
+            @for (
+              photo of photos();
+              track photo.id
+            ) {
+
+              <tr>
+
+                <td>
+
+                  <img
+                    [src]="getImageUrl(photo.imageUrl)"
+                    alt="Photo"
+                    class="w-10 h-10 rounded-full object-cover border border-gray-200">
+
+                </td>
+
+                <td>
+
+                  <p class="font-medium text-neutral-900">
+
+                    {{ photo.imageUrl }}
+
+                  </p>
+
+                </td>
+
+                <td class="text-right">
+
+                  <div class="flex justify-end gap-2">
+
+                    <button
+                      (click)="editPhoto(photo)"
+                      class="flex items-center justify-center p-2 border-2 border-green-500 rounded-full bg-white hover:bg-green-50"
+                      title="Modifier">
+
+                      ✏️
+
+                    </button>
+
+                    <button
+                      (click)="deletePhoto(photo)"
+                      class="flex items-center justify-center p-2 border-2 border-red-500 rounded-full bg-white hover:bg-red-50"
+                      title="Supprimer">
+
+                      🗑️
+
+                    </button>
+
+                  </div>
+
+                </td>
+
+              </tr>
+
+            }
+
+          </tbody>
+
+        </table>
+
+      </div>
+
+    }
+
+  </div>
+
+</div>
+
+@if (showModal()) {
+
+  <div class="fixed inset-0 bg-black/50 flex items-center justify-center z-50 p-4">
+
+    <div class="bg-white rounded-2xl shadow-xl w-full max-w-2xl">
+
+      <!-- En-tête -->
+      <div class="p-6 border-b border-neutral-200">
+
+        <h2 class="text-xl font-semibold">
+
+          {{
+            editingPhoto()
+              ? 'Modifier une photo'
+              : 'Nouvelle photo'
+          }}
+
+        </h2>
+
+      </div>
+
+
+      <!-- Formulaire -->
+      <form
+        (ngSubmit)="savePhoto()"
+        class="p-6 space-y-5">
+
+        <div>
+
+          <label class="label">
+
+            Photo
+
+            <span class="text-danger-500">
+              *
+            </span>
+
+          </label>
+
+          <input
+            type="file"
+            (change)="onFileSelected($event)"
+            accept="image/*"
+            class="input">
+
+        </div>
+
+
+        <!-- Aperçu -->
+        @if (preview) {
+
+          <div class="text-center">
+
+            <img
+              [src]="preview"
+              alt="Aperçu"
+              class="mx-auto max-h-80 rounded-lg object-contain">
+
+          </div>
+
+        }
+
+
+        <!-- Boutons -->
+        <div class="flex justify-end gap-3 pt-4 border-t">
+
+          <button
+            type="button"
+            (click)="closeModal()"
+            class="px-4 py-2 rounded-lg border border-red-500 text-red-500 hover:bg-red-50">
+
+            Annuler
+
+          </button>
+
+          <button
+            type="submit"
+            [disabled]="saving()"
+            class="btn-primary"
+            style="background-color: #00843B;">
+
+            @if (saving()) {
+
+              <div class="spinner w-4 h-4 mr-2"></div>
+
+            }
+
+            {{
+              editingPhoto()
+                ? 'Mettre à jour'
+                : 'Créer'
+            }}
+
+          </button>
+
+        </div>
+
+      </form>
+
+    </div>
+
+  </div>
+
+}
+
+@if (confirmModal().show) {
+
+  <div
+    class="fixed inset-0 z-[60] flex items-center justify-center bg-black/50 p-4">
+
+    <div
+      class="w-full max-w-md overflow-hidden rounded-2xl bg-white shadow-2xl">
+
+      <!-- En-tête -->
+      <div
+        class="flex items-center gap-3 border-b border-neutral-200 px-6 py-4">
+
+        <div
+          class="flex h-10 w-10 items-center justify-center rounded-full bg-red-100">
+
+          <i class="bi bi-exclamation-triangle-fill text-red-600"></i>
+
+        </div>
+
+        <h3 class="text-lg font-semibold text-neutral-900">
+
+          Confirmation de suppression
+
+        </h3>
+
+      </div>
+
+
+      <!-- Message -->
+      <div class="px-6 py-5">
+
+        <p class="text-neutral-600">
+
+          {{ confirmModal().message }}
+
+        </p>
+
+      </div>
+
+
+      <!-- Actions -->
+      <div
+        class="flex justify-end gap-3 border-t border-neutral-200 px-6 py-4">
+
+        <button
+          type="button"
+          (click)="closeConfirmModal()"
+          class="rounded-lg border border-neutral-300 px-4 py-2 text-neutral-700 hover:bg-neutral-100">
+
+          Annuler
+
+        </button>
+
+        <button
+          type="button"
+          (click)="confirmModal().onConfirm()"
+          class="rounded-lg bg-red-600 px-4 py-2 text-white hover:bg-red-700">
+
+          <i class="bi bi-trash me-2"></i>
+
+          Supprimer
+
+        </button>
+
+      </div>
+
+    </div>
+
+  </div>
+
+}

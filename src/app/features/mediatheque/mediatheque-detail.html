@@ -1,0 +1,64 @@
+<section class="detail-page py-10">
+  <div class="container mx-auto px-4">
+    <div class="mb-6 flex flex-wrap items-center justify-between gap-4">
+      <div>
+        <h1 class="text-3xl font-bold text-gray-900">Détail du média</h1>
+        <p class="text-gray-600">Consultez la photo ou la vidéo sélectionnée.</p>
+      </div>
+      <a routerLink="/mediatheque/mediatheque" class="btn btn-green">Retour à la médiathèque</a>
+    </div>
+
+    @if (loading()) {
+      <div class="text-center py-10">
+        <div class="spinner-border text-primary"></div>
+      </div>
+    } @else {
+      @if (type() === 'photo' && photo()) {
+        <div class="photo-detail">
+          <div class="photo-frame mb-6">
+            <img
+              [src]="getImageUrl(photo()?.imageUrl)"
+              alt="Photo médiathèque"
+              class="photo-image" />
+          </div>
+
+          <div class="flex items-center justify-between gap-3">
+            <button
+              class="btn btn-green"
+              (click)="previousPhoto()"
+              [disabled]="currentPhotoIndex() <= 0">
+              Précédent
+            </button>
+            <button
+              class="btn btn-green"
+              (click)="nextPhoto()"
+              [disabled]="currentPhotoIndex() >= photos().length - 1">
+              Suivant
+            </button>
+          </div>
+        </div>
+      } @else if (type() === 'video' && video()) {
+        <div class="video-detail">
+          @if (isYoutubeVideo()) {
+            <div class="video-frame mb-6">
+              <iframe
+                class="w-full h-[500px] rounded-xl border border-gray-200"
+                [src]="getYoutubeEmbedUrl(video()?.youtubeUrl)"
+                allowfullscreen>
+              </iframe>
+            </div>
+          } @else {
+            <video class="w-full rounded-xl border border-gray-200" controls preload="metadata">
+              <source [src]="getVideoUrl(video()?.videoUrl)" type="video/mp4" />
+              Votre navigateur ne prend pas en charge la lecture vidéo.
+            </video>
+          }
+        </div>
+      } @else {
+        <div class="text-center py-10 text-gray-600">
+          <p>Aucun média sélectionné ou média introuvable.</p>
+        </div>
+      }
+    }
+  </div>
+</section>
