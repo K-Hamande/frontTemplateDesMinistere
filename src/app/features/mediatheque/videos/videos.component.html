@@ -1,0 +1,226 @@
+<!-- Bannière -->
+    <div class="bg-gradient-to-r from-[#00843B] to-[#006B30] py-12">
+      <div class="container px-4 mx-auto">
+        <h1 class="mb-2 text-3xl font-bold text-white">Mediathèque</h1>
+        <nav class="text-sm text-green-100">
+          <a routerLink="/" class="hover:text-white">Accueil</a>
+          <span class="mx-2">›</span>
+          <a routerLink="/ressources/mediatheque" class="hover:text-white">Ministère</a>
+          <span class="mx-2">›</span>
+          <span class="text-white">Mediathèque</span>
+        </nav>
+      </div>
+    </div>
+
+
+<!-- ===========================
+     CONTENU
+============================ -->
+<!-- <section class="container py-5"> -->
+<!-- ===================== -->
+<!-- PHOTOTHÈQUE -->
+<!-- ===================== -->
+
+<section class="photo-section">
+
+    <div class="section-header">
+      <div>
+        <h2> <i class="bi bi-images me-2"></i>
+          Photothèque
+        </h2>
+        <p> Galerie des photos du ministère. </p>
+      </div>
+    </div>
+    @if(loadingPhotos()){
+
+        <div class="text-center py-5">
+            <div class="spinner-border text-primary"></div>
+        </div>
+
+    }
+
+    @else{
+
+        @if(photos().length === 0){
+
+            <div class="text-center py-5">
+
+                <i class="bi bi-images display-3"></i>
+
+                <p>Aucune Videos disponible.</p>
+
+            </div>
+
+        }
+
+        @else{
+
+            <div class="photo-grid">
+
+                @for(
+                        photo of getPaginatedPhotos();
+                        track photo.id
+                    ){
+
+                    <div
+                        class="photo-item"
+                        (click)="openPhoto(photo)">
+
+                        <img
+                            [src]="getImageUrl(photo.imageUrl)"
+                            alt="Photo">
+
+                    </div>
+
+                }
+
+            </div>
+        }
+    }
+
+    <div class="mt-5 text-center">
+
+    <button
+        class="btn btn-green me-2"
+        (click)="previousPhotoPage()"
+        [disabled]="currentPhotoPage() === 1">
+
+        <span>‹</span>
+
+        Précédent
+
+    </button>
+
+
+    <span
+        class="mx-3">
+
+        Page
+        {{ currentPhotoPage() }}
+        sur
+        {{ getTotalPhotoPages() }}
+
+    </span>
+
+
+    <button
+        class="btn btn-green ms-2"
+        (click)="nextPhotoPage()"
+        [disabled]="
+            currentPhotoPage()
+            === getTotalPhotoPages()
+        ">
+
+        Suivant
+
+        <span>›</span>
+
+    </button>
+
+</div>
+
+</section>
+
+    <!-- ===================== -->
+    <!-- VIDÉOTHÈQUE -->
+    <!-- ===================== -->
+  <section class="video-section">
+
+    <!-- <div class="section-header mt-5">
+
+        <div>
+
+            <h2>
+
+                <i class="bi bi-camera-reels me-2"></i>
+
+                Vidéothèque
+
+            </h2>
+
+            <p>
+
+                Retrouvez les vidéos des événements et activités.
+
+            </p>
+
+        </div>
+
+    </div> -->
+
+    <div class="section-header">
+      <div>
+        <h2> <i class="bi bi-camera-reels me-2"></i>
+          Vidéothèque
+        </h2>
+        <p> Retrouvez les vidéos des événements et activités. </p>
+      </div>
+    </div>
+
+    @if(loadingVideos()){
+
+        <div class="text-center py-5">
+
+            <div class="spinner-border text-danger"></div>
+
+        </div>
+
+    }
+
+    @else{
+
+        @if(videos().length===0){
+
+            <div class="text-center py-5">
+
+                <i class="bi bi-camera-video display-3"></i>
+
+                <p>Aucune vidéo disponible.</p>
+
+            </div>
+
+        }
+
+        @else{
+
+            @for(video of videos(); track video.id){
+
+                <div class="video-box mb-5">
+
+                    @if(isYoutube(video)){
+
+                        <iframe
+
+                            [src]="getYoutubeEmbedUrl(video.youtubeUrl)"
+
+                            allowfullscreen>
+
+                        </iframe>
+
+                    }
+
+                    @else{
+
+                        <video
+                            controls
+                            preload="metadata">
+
+                            <source
+                                [src]="getVideoUrl(video.videoUrl)"
+                                type="video/mp4">
+
+                        </video>
+
+                    }
+
+                </div>
+
+            }
+
+        }
+
+    }
+  </section>
+
+<!--
+   -->

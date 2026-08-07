@@ -1,0 +1,159 @@
+  <section class="bg-gradient-to-br from-[#00843B] to-[#006B30] text-white py-16">
+      <div class="container mx-auto px-4">
+        <h1 class="text-4xl font-bold mb-4 text-white">Documents</h1>
+        <p class="text-primary-100 text-lg max-w-2xl mb-2">
+          Consultez et téléchargez les documents officiels du ministère.
+        </p>
+        <nav class="text-green-100 text-sm">
+          <a routerLink="/" class="hover:text-white">Accueil</a>
+          <span class="mx-2">›</span>
+          <a routerLink="/ministere/ministre" class="hover:text-white">Ressources</a>
+          <span class="mx-2">›</span>
+          <span class="text-white">Documents</span>
+        </nav>
+      </div>
+    </section>
+    
+    <section class="py-12 bg-neutral-50">
+      <div class="container mx-auto px-4">
+        <div class="card mb-8">
+          <div class="flex flex-col md:flex-row gap-4">
+            <div class="flex-1 relative">
+              <svg class="absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5 text-neutral-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path>
+              </svg>
+              <input type="text" [(ngModel)]="searchQuery" (keyup.enter)="search()" placeholder="Rechercher un document..." class="input pl-10" >
+            </div>
+            <button (click)="search()" class="btn-primary" style="background-color: #006B30;">Rechercher</button>
+          </div>
+        </div>
+        
+        @if (loading()) {
+          <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+            @for (i of [1,2,3,4,5,6]; track i) {
+              <div class="card animate-pulse">
+                <div class="h-12 w-12 bg-neutral-200 rounded-xl mb-4"></div>
+                <div class="h-5 bg-neutral-200 rounded w-3/4 mb-2"></div>
+                <div class="h-4 bg-neutral-200 rounded w-1/2"></div>
+              </div>
+            }
+          </div>
+        } @else {
+
+            <div class="flex gap-6 items-start">
+
+            <!-- Colonne gauche : types de documents -->
+            <div class="w-96 p-4 rounded-xl border border-gray-200 bg-gray-50">
+                <h4 class="font-semibold text-gray-700 mb-4">Catégories</h4>
+                <ul class="space-y-2">
+                @for (type of projects(); track type.id) {
+                    <li 
+                    class="px-3 py-2 text-gray-800 rounded-lg cursor-pointer border border-gray-300 hover:bg-gray-100 transition-colors"
+                    [class.bg-gray-200]="selectedType() === type.name"
+                    (click)="selectType(type.name)">
+                    {{ type.name }}
+                    </li>
+                }
+                </ul>
+            </div>
+
+            <!-- Colonne droite : documents -->
+            <div class="flex-1 bg-white rounded-xl shadow p-4">
+                @if (documents().length === 0) {
+                <!-- Message si aucun document trouvé -->
+                <div class="text-center py-16">
+                    <svg class="w-16 h-16 text-neutral-300 mx-auto mb-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                            d="M7 21h10a2 2 0 002-2V9.414a1 1 0 00-.293-.707l-5.414-5.414A1 1 0 0012.586 3H7a2 2 0 00-2 2v14a2 2 0 002 2z"/>
+                    </svg>
+                    <h3 class="text-lg font-medium text-neutral-700 mb-2">Aucun document trouvé</h3>
+                </div>
+                } @else {
+                <!-- Affichage des documents -->
+                @for (doc of documents(); track doc.id) {
+                    <div class="flex items-center justify-between py-3 border-b last:border-b-0">
+                    <!-- Icône PDF -->
+                    <div class="flex-shrink-0 w-12 h-12 flex items-center justify-center bg-red-100 rounded-xl">
+                        <svg class="w-6 h-6" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M6 2H14L18 6V20C18 21.1046 17.1046 22 16 22H6C4.89543 22 4 21.1046 4 20V4C4 2.89543 4.89543 2 6 2Z" fill="#E53E3E"/>
+                        <path d="M14 2V6H18" fill="white"/>
+                        </svg>
+                    </div>
+
+                    <!-- Titre + catégorie + taille -->
+                    <div class="flex-1 px-4 min-w-0">
+                        <h3 class="text-sm font-semibold text-neutral-900 truncate">{{ doc.title }}</h3>
+                        <div class="flex items-center gap-2 mt-1 text-xs text-neutral-400">
+                        <span class="badge-primary">{{ getCategoryLabel(doc.category) }}</span>
+                        @if (doc.fileSize) {
+                            <span>{{ formatFileSize(doc.fileSize) }}</span>
+                        }
+                        </div>
+                    </div>
+
+
+                    <!-- Bouton Télécharger -->
+                    @if (doc.filePath) {
+                      <button (click)="downloadFile(doc)"
+                              class="flex items-center gap-2 px-4 py-2 bg-red-600 text-white text-sm rounded-xl hover:bg-red-700 transition-colors">
+                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"></path>
+                        </svg>
+                        Télécharger
+                      </button>
+                    }
+
+                    </div>
+                }
+
+
+                <div class="flex justify-end items-center mt-2 px-6 py-2 gap-2 border-t border-gray-200 bg-gray-50 rounded-b-lg">
+
+  <button (click)="prevPage()" 
+          [disabled]="currentPage() === 1"
+          class="px-3 py-1 border border-gray-300 rounded hover:bg-gray-100 disabled:opacity-50 transition-colors">
+    « Précédent
+  </button>
+
+  <ng-container *ngFor="let page of pages()">
+    <button (click)="goToPage(page)"
+            [ngClass]="currentPage() === page
+                    ? 'px-3 py-1 border rounded text-white' 
+                    : 'px-3 py-1 border border-gray-300 rounded hover:bg-gray-100 transition-colors'"
+            [ngStyle]="currentPage() === page ? {'background-color':'#00843B', 'border-color':'#00843B'} : {}">
+      {{ page }}
+    </button>
+  </ng-container>
+
+  <button (click)="nextPage()" 
+          [disabled]="currentPage() === totalPages()"
+          class="px-3 py-1 border border-gray-300 rounded hover:bg-gray-100 disabled:opacity-50 transition-colors">
+    Suivant »
+  </button>
+
+</div>
+
+
+                
+                }
+            </div>
+
+            </div>
+
+
+
+        }
+
+
+
+
+
+
+
+      </div>
+    </section>
+
+
+
+    

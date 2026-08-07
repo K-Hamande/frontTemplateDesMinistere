@@ -183,7 +183,7 @@ import { Document } from '../../core/models';
     
   `
 })
-export class GalerieListComponent implements OnInit {
+export class DocumentsListComponent implements OnInit {
   documents = signal<Document[]>([]);
   loading = signal(true);
   searchQuery = '';

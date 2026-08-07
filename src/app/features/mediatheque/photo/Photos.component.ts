@@ -15,16 +15,16 @@ interface ApiResponse<T> {
 }
 
 @Component({
-  selector: 'app-mediatheque',
+  selector: 'app-photos',
   standalone: true,
   imports: [
     CommonModule,
     RouterLink
   ],
-  templateUrl: './mediatheque.component.html',
-  styleUrls: ['./mediatheque.component.scss']
+  templateUrl: './photos.component.html',
+  styleUrls: ['./photos.component.scss']
 })
-export class MediathequeComponent implements OnInit {
+export class PhotosComponent  implements OnInit {
 
   fileUrl = environment.FileUrl;
 
@@ -288,7 +288,7 @@ previousPhotoPage(): void {
   }
 
   this.router.navigate([
-    '/ressources/mediatheque',
+    '/ressources/photos',
     'photo',
     photo.id
   ]);
@@ -307,7 +307,7 @@ previousPhotoPage(): void {
   }
 
   this.router.navigate([
-    '/ressources/mediatheque',
+    '/ressources/photos',
     'video',
     video.id
   ]);

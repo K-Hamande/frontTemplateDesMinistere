@@ -13,9 +13,7 @@ export const routes: Routes = [
       { path: 'projets', loadComponent: () => import('./features/projects/projets/projets.component').then(m => m.ProjetsComponent) },
       { path: 'projets/:id', loadComponent: () => import('./features/projects/detail-projets/detail-projets.component').then(m => m.DetailProjetsComponent) },
       { path: 'ressources/documents', loadComponent: () => import('./features/documents/documents/documents.component').then(m => m.DocumentsComponent) },
-      // { path: 'DocumentsJuridique/', loadComponent: () => import('./features/DocumentsJuridique/Lois/Lois.component').then(m => m.DocumentsJuridiqueComponent) },
-
-      { path: 'mediatheque/mediatheque', loadComponent: () => import('./features/mediatheque/mediatheque/mediatheque.component').then(m => m.MediathequeComponent) },
+      { path: 'ressources/galerie', loadComponent: () => import('./features/galeries/photos/photos.component').then(m => m.PhotosComponent) },
       { path: 'contact', loadComponent: () => import('./features/contact/contact/contact.component').then(m => m.ContactComponent) },
       { path: 'ministere/ministre', loadComponent: () => import('./features/ministere/ministre/ministre.component').then(m => m.MinistreComponent) },
       { path: 'ministere/missions', loadComponent: () => import('./features/ministere/mission/mission.component').then(m => m.MissionComponent) },
@@ -27,7 +25,9 @@ export const routes: Routes = [
       { path: 'agendas', loadComponent: () => import('./features/agendas/agendas.component').then(m => m.AgendasComponent) },
       { path: 'agendas/:id', loadComponent: () => import('./features/agendas/detail-agenda/detail-agenda.component').then(m => m.DetailAgendaComponent) },
      { path: 'communiques', loadComponent: () => import('./features/communiques/communiques.component').then(m => m.CommuniquesComponent) },
-      
+    //  { path: 'photos', loadComponent: () => import('./features/admin/mediatheque/photo/Photos.component').then(m => m.PhotosComponent) },
+    // { path: 'mediatheque/Videos', loadComponent: () => import('./features/admin/mediatheque/Videos/videos.component').then(m => m.VideoComponent) },
+
       // Redirections pour compatibilité
       { path: 'articles', redirectTo: 'actualites', pathMatch: 'full' },
       
@@ -50,12 +50,12 @@ export const routes: Routes = [
   
   // Admin routes
   {
-    path: 'admin',
+    path: 'admin',  
     loadComponent: () => import('./layouts/admin/admin-layout.component').then(m => m.AdminLayoutComponent),
     canActivate: [adminGuard],
     children: [
       { path: '', redirectTo: 'dashboard', pathMatch: 'full' },
-      { path: 'mediatheque', loadComponent: () => import('./features/admin/photo/photo').then(m => m.PhotoComponent) },
+      // { path: 'mediatheque/videos', loadComponent: () => import('./features/admin/mediatheque/Videos/videos.component').then(m => m.VideosComponent) },
       { path: 'dashboard', loadComponent: () => import('./features/admin/dashboard/dashbord/dashbord.component').then(m => m.DashbordComponent) },
       { path: 'articlest', loadComponent: () => import('./features/admin/articles/admin-articles.component').then(m => m.AdminArticlesComponent) },
       { path: 'project', loadComponent: () => import('./features/admin/projects/admin-projects.component').then(m => m.AdminProjectsComponent) },
@@ -77,8 +77,9 @@ export const routes: Routes = [
      { path: 'domains', loadComponent: () => import('./features/admin/domains/domains.component').then(m => m.DomainsComponent) },
      { path: 'ministre', loadComponent: () => import('./features/admin/ministere/ministre/ministre.component').then(m => m.MinistreComponent) },
      { path: 'etats', loadComponent: () => import('./features/admin/ministere/etats/etats.component').then(m => m.EtatsComponent) },
-     
      { path: 'structures', loadComponent: () => import('./features/admin/structure-rattaches/structure-rattaches.component').then(m => m.StructureRattachesComponent) },
+    { path: 'galeries', loadComponent: () => import('./features/admin/galeries/galeries/galeries.component').then(m => m.GaleriesComponent) },
+
      
     ]
   },
