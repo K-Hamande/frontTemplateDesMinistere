@@ -2,14 +2,14 @@
       <div class="container mx-auto px-4">
         <h1 class="text-4xl font-bold mb-4 text-white">Documents</h1>
         <p class="text-primary-100 text-lg max-w-2xl mb-2">
-          Consultez et téléchargez les documents officiels du ministère.
+          Consultez les photos et les vidéos officiels du ministère.
         </p>
         <nav class="text-green-100 text-sm">
           <a routerLink="/" class="hover:text-white">Accueil</a>
           <span class="mx-2">›</span>
           <a routerLink="/ministere/ministre" class="hover:text-white">Ressources</a>
           <span class="mx-2">›</span>
-          <span class="text-white">Documents</span>
+          <span class="text-white">Galeries</span>
         </nav>
       </div>
     </section>
@@ -22,7 +22,7 @@
               <svg class="absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5 text-neutral-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path>
               </svg>
-              <input type="text" [(ngModel)]="searchQuery" (keyup.enter)="search()" placeholder="Rechercher un document..." class="input pl-10" >
+              <input type="text" [(ngModel)]="searchQuery" (keyup.enter)="search()" placeholder="Rechercher une photo ou vidéo..." class="input pl-10" >
             </div>
             <button (click)="search()" class="btn-primary" style="background-color: #006B30;">Rechercher</button>
           </div>
@@ -66,7 +66,7 @@
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                             d="M7 21h10a2 2 0 002-2V9.414a1 1 0 00-.293-.707l-5.414-5.414A1 1 0 0012.586 3H7a2 2 0 00-2 2v14a2 2 0 002 2z"/>
                     </svg>
-                    <h3 class="text-lg font-medium text-neutral-700 mb-2">Aucun document trouvé</h3>
+                    <h3 class="text-lg font-medium text-neutral-700 mb-2">Aucun vidéo trouvée</h3>
                 </div>
                 } @else {
                 <!-- Affichage des documents -->

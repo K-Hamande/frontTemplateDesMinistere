@@ -1,10 +1,18 @@
-import { Component, computed, signal } from '@angular/core';
+import { Component, OnInit, signal, computed } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-import { Document, TypeDocument } from '../../../core/models';
 import { ApiService } from '../../../core/services/api.service';
+import { forkJoin } from 'rxjs';
 import { environment } from '../../../../environments/environment';
-import { HttpClient } from '@angular/common/http';
+
+interface MediaItem {
+  id: number;
+  type: 'PHOTO' | 'VIDEO';
+  title: string;
+  description?: string;
+  url: string;
+  createdAt?: string;
+}
 
 @Component({
   selector: 'app-photos',
@@ -13,172 +21,148 @@ import { HttpClient } from '@angular/common/http';
   templateUrl: './photos.component.html',
   styleUrls: ['./photos.component.scss']
 })
-export class PhotosComponent {
-  private readonly API_URL = environment.FileUrl;
+export class PhotosComponent implements OnInit {
+  private readonly FILE_URL = environment.FileUrl;
 
-  selectedType = signal<string | null>(null); // null = tous les documents
-allDocuments = signal<Document[]>([]); // tous les documents récupérés
+  allMedia = signal<MediaItem[]>([]);
+  media = signal<MediaItem[]>([]);
+  loading = signal(true);
 
+  selectedType = signal<'PHOTO' | 'VIDEO' | null>(null);
+  selectedMedia = signal<MediaItem | null>(null);
+  selectedIndex = signal<number>(-1);
+  searchQuery = '';
 
+  pageSize = 12;
+  currentPage = signal(1);
+  totalPages = signal(1);
 
-projects = signal<TypeDocument[]>([]);
- documents = signal<Document[]>([]);
- loading = signal(true);
-   searchQuery = '';
-   pageSize = 5; // nombre de documents par page
-currentPage = signal(1);
-totalPages = signal(1);
-
-   
-   constructor(private apiService: ApiService, private http: HttpClient) {}
-   
-   ngOnInit(): void {
-     this.loadDocuments(); this.loadProjects();
-   }
-
-
-   selectType(typeName: string) {
-  if (this.selectedType() === typeName) {
-    this.selectedType.set(null); // reclique = désélectionner
-  } else {
-    this.selectedType.set(typeName);
-  }
-  this.currentPage.set(1);
-
-  // Refiltrer les documents
-  this.filterDocuments();
-}
-
-
-filterDocuments() {
-  const filtered = this.allDocuments().filter(doc =>
-    !this.selectedType() || doc.typeName === this.selectedType()
+  pages = computed(() =>
+    Array.from({ length: this.totalPages() }, (_, i) => i + 1)
   );
-// Calcul du nombre total de pages
- this.totalPages.set(Math.ceil(filtered.length / this.pageSize));
 
-  const start = (this.currentPage() - 1) * this.pageSize;
-  const paginated = filtered.slice(start, start + this.pageSize);
+  constructor(private apiService: ApiService) {}
 
-  this.documents.set(paginated);
-}
-
-
-pages = computed(() => {
-  return Array.from({ length: this.totalPages() }, (_, i) => i + 1);
-});
-
-
-goToPage(page: number) {
-  if (page < 1 || page > this.totalPages()) return;
-  this.currentPage.set(page);
-  this.filterDocuments();
-}
-
-nextPage() {
-  this.goToPage(this.currentPage() + 1);
-}
-
-prevPage() {
-  this.goToPage(this.currentPage() - 1);
-}
-
-   
-   loadDocuments(): void {
-     this.loading.set(true);
-     this.apiService.getPublicDocuments(0, 20).subscribe({
-       next: (response) => {
-        if (response.success) {
-        // Filtrer les documents pour ne garder que ceux de catégorie "DOCUMENT_SIMPLE"
-        const filteredDocs = response.data.content.filter(
-          (doc: Document) => doc.typeDocument === 'DOCUMENT SIMPLE'
-        );
-        this.allDocuments.set(filteredDocs);
-        this.filterDocuments();
-      }
-         this.loading.set(false);
-       },
-       error: () => this.loading.set(false)
-     });
-   }
-   
-   search(): void {
-     if (!this.searchQuery.trim()) { this.loadDocuments(); return; }
-     this.loading.set(true);
-     this.apiService.searchDocuments(this.searchQuery, 0, 20).subscribe({
-       next: (response) => {
-         if (response.success) this.documents.set(response.data.content);
-         this.loading.set(false);
-       },
-       error: () => this.loading.set(false)
-     });
-   }
-   
-   getCategoryLabel(category: string): string {
-     const labels: Record<string, string> = { 'RAPPORT': 'Rapport', 'LOI': 'Loi', 'DECRET': 'Décret', 'ARRETE': 'Arrêté', 'CIRCULAIRE': 'Circulaire', 'FORMULAIRE': 'Formulaire', 'GUIDE': 'Guide', 'AUTRE': 'Autre' };
-     return labels[category] || category;
-   }
-   
-   formatFileSize(bytes: number): string {
-     if (bytes < 1024) return bytes + ' B';
-     if (bytes < 1048576) return (bytes / 1024).toFixed(1) + ' KB';
-     return (bytes / 1048576).toFixed(1) + ' MB';
-   }
-
-       
-loadProjects(): void {
-  
-
-  this.apiService.getAllTypes().subscribe({
-    next: (response) => {
-      console.log("RESPONSE =", response); // 👈 ici le tableau
-
-      this.projects.set(response); // ✅ DIRECTEMENT
-      console.log("PROJECTS =", this.projects());
-
-      
-    },
-    error: (err) => {
-      console.error("Erreur API", err);
-      
-    }
-  });
-}
-
-
-getImageUrl(path?: string): string | null {
-     console.log(path);
-    return path ? this.API_URL + path : null;
-   
+  ngOnInit(): void {
+    this.loadMedia();
   }
 
-  downloadFile(doc: any) {
-  this.http.get(this.getImageUrl(doc.filePath)!, {
-    responseType: 'blob'
-  }).subscribe(blob => {
-    const url = window.URL.createObjectURL(blob);
-    const a = document.createElement('a');
-    a.href = url;
-    a.download = doc.title + '.pdf';
-    a.click();
-    window.URL.revokeObjectURL(url);
-  });
-}
+  loadMedia(): void {
+    this.loading.set(true);
 
+    forkJoin({
+      photos: this.apiService.getAllPhotos(),
+      videos: this.apiService.getAllVideos()
+    }).subscribe({
+      next: ({ photos, videos }) => {
+        console.log('RAW PHOTOS =', photos);
+        console.log('RAW VIDEOS =', videos);
 
-  downloadDoc(doc: any) {
-  this.apiService.downloadDocument(doc.id).subscribe({
-    next: (blob) => {
-      const url = window.URL.createObjectURL(blob);
-      const a = document.createElement('a');
-      a.href = url;
-      a.download = doc.title + '.pdf'; // nom du fichier
-      a.click();
-      window.URL.revokeObjectURL(url);
-    },
-    error: (err) => console.error('Erreur téléchargement', err)
-  });
-}
+        const photoList = this.extractArray(photos).map(p => this.mapToMediaItem(p, 'PHOTO'));
+        const videoList = this.extractArray(videos).map(v => this.mapToMediaItem(v, 'VIDEO'));
 
+        const combined = [...photoList, ...videoList].sort((a, b) =>
+          (b.createdAt || '').localeCompare(a.createdAt || '')
+        );
 
+        this.allMedia.set(combined);
+        this.filterMedia();
+        this.loading.set(false);
+      },
+      error: (err) => {
+        console.error('Erreur chargement médias', err);
+        this.loading.set(false);
+      }
+    });
+  }
+
+  private extractArray(response: any): any[] {
+    if (Array.isArray(response)) return response;
+    if (Array.isArray(response?.data)) return response.data;
+    if (Array.isArray(response?.data?.content)) return response.data.content;
+    if (Array.isArray(response?.content)) return response.content;
+    return [];
+  }
+
+  private mapToMediaItem(raw: any, type: 'PHOTO' | 'VIDEO'): MediaItem {
+    const rawUrl =
+      raw.url ?? raw.imageUrl ?? raw.photoUrl ?? raw.videoUrl ??
+      raw.fileUrl ?? raw.path ?? raw.filePath ?? '';
+
+    return {
+      id: raw.id,
+      type,
+      title: raw.title ?? raw.name ?? '',
+      description: raw.description ?? '',
+      url: this.resolveUrl(rawUrl),
+      createdAt: raw.createdAt ?? raw.createdDate ?? ''
+    };
+  }
+
+  private resolveUrl(path: string): string {
+    if (!path) return '';
+    if (path.startsWith('http')) return path;
+    return this.FILE_URL + path;
+  }
+
+  selectType(type: 'PHOTO' | 'VIDEO'): void {
+    this.selectedType.set(this.selectedType() === type ? null : type);
+    this.currentPage.set(1);
+    this.filterMedia();
+  }
+
+  search(): void {
+    this.currentPage.set(1);
+    this.filterMedia();
+  }
+
+  filterMedia(): void {
+    const query = this.searchQuery.trim().toLowerCase();
+
+    const filtered = this.allMedia().filter(item => {
+      const matchesType = !this.selectedType() || item.type === this.selectedType();
+      const matchesQuery = !query || item.title.toLowerCase().includes(query);
+      return matchesType && matchesQuery;
+    });
+
+    this.totalPages.set(Math.max(1, Math.ceil(filtered.length / this.pageSize)));
+    const start = (this.currentPage() - 1) * this.pageSize;
+    this.media.set(filtered.slice(start, start + this.pageSize));
+  }
+
+  goToPage(page: number): void {
+    if (page < 1 || page > this.totalPages()) return;
+    this.currentPage.set(page);
+    this.filterMedia();
+  }
+
+  nextPage(): void { this.goToPage(this.currentPage() + 1); }
+  prevPage(): void { this.goToPage(this.currentPage() - 1); }
+
+  openLightbox(item: MediaItem): void {
+    const index = this.media().findIndex(m => m.id === item.id);
+    this.selectedIndex.set(index);
+    this.selectedMedia.set(item);
+  }
+
+  closeLightbox(): void {
+    this.selectedMedia.set(null);
+    this.selectedIndex.set(-1);
+  }
+
+  nextMedia(): void {
+    const list = this.media();
+    if (list.length === 0) return;
+    const next = (this.selectedIndex() + 1) % list.length;
+    this.selectedIndex.set(next);
+    this.selectedMedia.set(list[next]);
+  }
+
+  prevMedia(): void {
+    const list = this.media();
+    if (list.length === 0) return;
+    const prev = (this.selectedIndex() - 1 + list.length) % list.length;
+    this.selectedIndex.set(prev);
+    this.selectedMedia.set(list[prev]);
+  }
 }

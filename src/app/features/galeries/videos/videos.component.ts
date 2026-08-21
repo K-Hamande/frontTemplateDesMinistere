@@ -10,10 +10,10 @@ import { environment } from '../../../../environments/environment';
   selector: 'app-politiques',
   standalone: true,
   imports: [CommonModule, FormsModule],
-  templateUrl: './politiques.component.html',
-  styleUrls: ['./politiques.component.scss']
+  templateUrl: './videos.component.html',
+  styleUrls: ['./videos.component.scss']
 })
-export class PolitiquesComponent {
+export class VideosComponent {
 private readonly API_URL = environment.FileUrl;
 
   selectedType = signal<string | null>(null); // null = tous les documents

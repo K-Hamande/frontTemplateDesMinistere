@@ -13,7 +13,8 @@ export const routes: Routes = [
       { path: 'projets', loadComponent: () => import('./features/projects/projets/projets.component').then(m => m.ProjetsComponent) },
       { path: 'projets/:id', loadComponent: () => import('./features/projects/detail-projets/detail-projets.component').then(m => m.DetailProjetsComponent) },
       { path: 'ressources/documents', loadComponent: () => import('./features/documents/documents/documents.component').then(m => m.DocumentsComponent) },
-      { path: 'ressources/galerie', loadComponent: () => import('./features/galeries/photos/photos.component').then(m => m.PhotosComponent) },
+      { path: 'ressources/galeries', loadComponent: () => import('./features/galeries/photos/photos.component').then(m => m.PhotosComponent) },
+      { path: 'ressources/galeries', loadComponent: () => import('./features/galeries/videos/videos.component').then(m => m.VideosComponent) },
       { path: 'contact', loadComponent: () => import('./features/contact/contact/contact.component').then(m => m.ContactComponent) },
       { path: 'ministere/ministre', loadComponent: () => import('./features/ministere/ministre/ministre.component').then(m => m.MinistreComponent) },
       { path: 'ministere/missions', loadComponent: () => import('./features/ministere/mission/mission.component').then(m => m.MissionComponent) },
@@ -24,10 +25,9 @@ export const routes: Routes = [
       { path: 'evenements', loadComponent: () => import('./features/events/evenements/evenements.component').then(m => m.EvenementsComponent) },
       { path: 'agendas', loadComponent: () => import('./features/agendas/agendas.component').then(m => m.AgendasComponent) },
       { path: 'agendas/:id', loadComponent: () => import('./features/agendas/detail-agenda/detail-agenda.component').then(m => m.DetailAgendaComponent) },
-     { path: 'communiques', loadComponent: () => import('./features/communiques/communiques.component').then(m => m.CommuniquesComponent) },
-    //  { path: 'photos', loadComponent: () => import('./features/admin/mediatheque/photo/Photos.component').then(m => m.PhotosComponent) },
-    // { path: 'mediatheque/Videos', loadComponent: () => import('./features/admin/mediatheque/Videos/videos.component').then(m => m.VideoComponent) },
+      { path: 'communiques', loadComponent: () => import('./features/communiques/communiques.component').then(m => m.CommuniquesComponent) },
 
+    
       // Redirections pour compatibilité
       { path: 'articles', redirectTo: 'actualites', pathMatch: 'full' },
       
@@ -55,7 +55,6 @@ export const routes: Routes = [
     canActivate: [adminGuard],
     children: [
       { path: '', redirectTo: 'dashboard', pathMatch: 'full' },
-      // { path: 'mediatheque/videos', loadComponent: () => import('./features/admin/mediatheque/Videos/videos.component').then(m => m.VideosComponent) },
       { path: 'dashboard', loadComponent: () => import('./features/admin/dashboard/dashbord/dashbord.component').then(m => m.DashbordComponent) },
       { path: 'articlest', loadComponent: () => import('./features/admin/articles/admin-articles.component').then(m => m.AdminArticlesComponent) },
       { path: 'project', loadComponent: () => import('./features/admin/projects/admin-projects.component').then(m => m.AdminProjectsComponent) },
@@ -78,7 +77,9 @@ export const routes: Routes = [
      { path: 'ministre', loadComponent: () => import('./features/admin/ministere/ministre/ministre.component').then(m => m.MinistreComponent) },
      { path: 'etats', loadComponent: () => import('./features/admin/ministere/etats/etats.component').then(m => m.EtatsComponent) },
      { path: 'structures', loadComponent: () => import('./features/admin/structure-rattaches/structure-rattaches.component').then(m => m.StructureRattachesComponent) },
-    { path: 'galeries', loadComponent: () => import('./features/admin/galeries/galeries/galeries.component').then(m => m.GaleriesComponent) },
+     { path: 'galeries', loadComponent: () => import('./features/admin/galeries/galeries.component').then(m => m.GaleriesComponent) },
+    
+
 
      
     ]

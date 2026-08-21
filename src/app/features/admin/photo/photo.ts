@@ -305,18 +305,10 @@ export class PhotoComponent implements OnInit {
 
     'photo',
 
-    new Blob(
-
-      [
-        JSON.stringify(photoData)
-
-      ],
-
-      {
-        type: 'application/json'
-      }
-
-    )
+    JSON.stringify({
+      id: editing?.id ?? null,
+      imageUrl: editing?.imageUrl || ''
+    })
 
   );
 

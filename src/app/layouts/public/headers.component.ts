@@ -1,4 +1,4 @@
-import { Component, signal, inject, HostListener } from '@angular/core';
+ import { Component, signal, inject, HostListener } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterLink, RouterLinkActive } from '@angular/router';
 import { AuthService } from '../../core/services/auth.service';
@@ -161,6 +161,8 @@ import { AuthService } from '../../core/services/auth.service';
             <a routerLink="/evenements" (click)="closeMobileMenu()" class="block px-4 py-2.5 rounded-lg text-sm font-medium text-slate-600 hover:bg-primary-50 hover:text-primary-600 transition-colors">Événements</a>
             <a routerLink="/documents" (click)="closeMobileMenu()" class="block px-4 py-2.5 rounded-lg text-sm font-medium text-slate-600 hover:bg-primary-50 hover:text-primary-600 transition-colors">Documents</a>
             <a routerLink="/faq" (click)="closeMobileMenu()" class="block px-4 py-2.5 rounded-lg text-sm font-medium text-slate-600 hover:bg-primary-50 hover:text-primary-600 transition-colors">FAQ</a>
+            <a routerLink="/galeries" (click)="closeMobileMenu()" class="block px-4 py-2.5 rounded-lg text-sm font-medium text-slate-600 hover:bg-primary-50 hover:text-primary-600 transition-colors">Galeries</a>
+
             <a routerLink="/contact" (click)="closeMobileMenu()" class="block px-4 py-2.5 rounded-lg text-sm font-medium text-slate-600 hover:bg-primary-50 hover:text-primary-600 transition-colors">Contact</a>
             
             <div class="pt-2 border-t border-slate-100">

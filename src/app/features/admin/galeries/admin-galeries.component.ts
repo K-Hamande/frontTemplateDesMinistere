@@ -188,3 +188,5 @@ export class AdminDocumentsComponent implements OnInit {
   
   formatDate(dateStr: string): string { return dateStr ? new Date(dateStr).toLocaleDateString('fr-FR') : ''; }
 }
+
+
